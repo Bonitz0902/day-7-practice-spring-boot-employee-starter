@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.lang.Long;
+
 
 @Repository
 public class EmployeeRepository {
@@ -53,7 +55,7 @@ public class EmployeeRepository {
     }
 
     public Employee updateEmployee(Employee updatedEmployee) {
-        Employee matchedEmployeeById = findById(updatedEmployee);
+        Employee matchedEmployeeById = findById(updatedEmployee.getId());
 
         matchedEmployeeById.setAge(updatedEmployee.getAge());
         matchedEmployeeById.setSalary(updatedEmployee.getSalary());
@@ -61,11 +63,11 @@ public class EmployeeRepository {
         return matchedEmployeeById;
     }
 
-    private static Employee findById(Employee updatedEmployee) {
-        return employees.stream()
-                .filter(employee -> employee.getId() == updatedEmployee.getId())
-                .findFirst()
-                .orElse(null);
-    }
 
+
+    public String deleteEmployee(Long employeeId) {
+         Employee matchedEmployeeById = findById(employeeId);
+         employees.remove(matchedEmployeeById);
+         return "Employee Deleted.";
+    }
 }
