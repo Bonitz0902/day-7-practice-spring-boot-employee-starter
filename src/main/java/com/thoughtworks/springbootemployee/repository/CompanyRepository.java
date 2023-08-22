@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @Repository
 
 public class CompanyRepository {
-    private CompanyData companyData = new CompanyData();
-    private Map<Long, Company> companyMap = companyData.getCompanies();
+    private final CompanyData companyData = new CompanyData();
+    private final Map<Long, Company> companyMap = companyData.getCompanies();
 
 
     public List<Company> listAll() {
@@ -32,7 +32,7 @@ public class CompanyRepository {
 
     public Map<Long, Company> listByPage(Long pageNumber, Long pageSize) {
         return companyMap.values().stream()
-                .skip((long) (pageNumber - 1) * pageSize)
+                .skip( (pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toMap(
                         Company::getId,
