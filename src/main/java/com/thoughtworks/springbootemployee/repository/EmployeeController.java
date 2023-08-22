@@ -1,6 +1,9 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.controller.EmployeeRepository;
+import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +36,13 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
+    }
 
+    @PutMapping(path = "/{id}")
+    public Employee updateEmployee(@RequestBody Employee employee){
+        return employeeRepository.updateEmployee(employee);
     }
 }

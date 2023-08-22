@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -49,4 +51,21 @@ public class EmployeeRepository {
                 .max()
                 .orElse(0L) + 1L;
     }
+
+    public Employee updateEmployee(Employee updatedEmployee) {
+        Employee matchedEmployeeById = findById(updatedEmployee);
+
+        matchedEmployeeById.setAge(updatedEmployee.getAge());
+        matchedEmployeeById.setSalary(updatedEmployee.getSalary());
+
+        return matchedEmployeeById;
+    }
+
+    private static Employee findById(Employee updatedEmployee) {
+        return employees.stream()
+                .filter(employee -> employee.getId() == updatedEmployee.getId())
+                .findFirst()
+                .orElse(null);
+    }
+
 }

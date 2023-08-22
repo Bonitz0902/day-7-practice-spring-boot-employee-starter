@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.dataTransferObject;
 
 public class Employee {
     private long id;
