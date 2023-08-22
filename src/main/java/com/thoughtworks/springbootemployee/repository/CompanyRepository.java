@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class CompanyRepository {
     private CompanyData companyData = new CompanyData();
     private Map<Long, Company> companyMap = companyData.getCompanies();
-    private Employee employee = new Employee(2L,"123123",23,"232",23);
 
 
     public List<Company> listAll() {
@@ -39,6 +38,20 @@ public class CompanyRepository {
                         Company::getId,
                         company -> company
                 ));
+    }
+
+    public Company save(Company company) {
+        Long id = generateNextId();
+        Company toBeSavedCompany = new Company(id, company.getName());
+        companyMap.put(toBeSavedCompany.getId(), company);
+        return toBeSavedCompany;
+    }
+
+    public Long generateNextId() {
+        return companyMap.values().stream()
+                .mapToLong(Company::getId)
+                .max()
+                .orElse(0L) + 1L;
     }
 }
 
