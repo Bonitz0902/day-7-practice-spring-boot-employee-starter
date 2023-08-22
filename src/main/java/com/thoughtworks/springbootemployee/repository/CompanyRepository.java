@@ -3,13 +3,12 @@ package com.thoughtworks.springbootemployee.repository;
 import com.thoughtworks.springbootemployee.dataTransferObject.Company;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.staticData.CompanyData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 
@@ -21,5 +20,9 @@ public class CompanyRepository {
 
     public List<Company> listAll() {
         return new ArrayList<>(companyMap.values());
+    }
+
+    public Company findById(Long id) {
+        return companyMap.get(id);
     }
 }
