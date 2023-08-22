@@ -1,7 +1,8 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.staticData.EmployeeData;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,16 +12,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
-    private static final List<Employee> employees = new ArrayList<>();
+    EmployeeData employeeData = new EmployeeData();
+    private final List<Employee> employees = employeeData.employees();
 
-    static {
-        employees.add(new Employee(1L, "Alice", 30, "Female", 500));
-        employees.add(new Employee(2L, "Bob", 23, "Male", 699));
-        employees.add(new Employee(3L, "Sandra", 66, "Female", 788));
-        employees.add(new Employee(4L, "Sam", 34, "Male", 4566));
-        employees.add(new Employee(5L, "Aubrey", 69, "Male", 6969));
-
-    }
 
     public List<Employee> listAll() {
         return employees;
