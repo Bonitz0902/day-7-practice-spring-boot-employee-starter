@@ -60,6 +60,11 @@ public class CompanyRepository {
         matchedCompanyById.setName(company.getName());
         return matchedCompanyById;
     }
+
+    public String deleteCompany(Long id) {
+        companyMap.remove(id);
+        return "Company Deleted";
+    }
 }
 
 
