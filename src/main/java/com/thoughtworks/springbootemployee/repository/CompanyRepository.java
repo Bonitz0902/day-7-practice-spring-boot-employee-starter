@@ -25,4 +25,9 @@ public class CompanyRepository {
     public Company findById(Long id) {
         return companyMap.get(id);
     }
+
+    public List<Employee> findEmployees(Long id) {
+        Company company = findById(id);
+        return company.getEmployeeList();
+    }
 }

@@ -1,15 +1,12 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.dataTransferObject.Company;
+import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -32,4 +29,11 @@ public class CompanyController {
     public Company findById(@PathVariable Long id){
         return companyRepository.findById(id);
     }
+
+    @GetMapping(path = "/{id}/employees")
+    public List<Employee> listAllCompanyEmployees(@PathVariable Long id){
+        return companyRepository.findEmployees(id);
+    }
+
+
 }
