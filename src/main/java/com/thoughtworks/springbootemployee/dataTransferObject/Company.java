@@ -8,7 +8,6 @@ public class Company {
     private String name;
     private List<Employee> employeeList = new ArrayList<>();
 
-
     public Long getId() {
         return id;
     }

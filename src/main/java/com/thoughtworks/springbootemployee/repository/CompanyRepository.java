@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 
@@ -30,4 +30,17 @@ public class CompanyRepository {
         Company company = findById(id);
         return company.getEmployeeList();
     }
+
+    public Map<Long, Company> listByPage(Long pageNumber, Long pageSize) {
+        return companyMap.values().stream()
+                .skip((long) (pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toMap(
+                        Company::getId,
+                        company -> company
+                ));
+    }
 }
+
+
+

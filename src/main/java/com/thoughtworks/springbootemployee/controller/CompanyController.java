@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/companies")
@@ -33,6 +34,12 @@ public class CompanyController {
     @GetMapping(path = "/{id}/employees")
     public List<Employee> listAllCompanyEmployees(@PathVariable Long id){
         return companyRepository.findEmployees(id);
+    }
+
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public Map<Long, Company> listByPage(@RequestParam Long pageNumber,
+                                         @RequestParam Long pageSize){
+        return companyRepository.listByPage(pageNumber,pageSize);
     }
 
 
