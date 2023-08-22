@@ -53,6 +53,13 @@ public class CompanyRepository {
                 .max()
                 .orElse(0L) + 1L;
     }
+
+    public Company updateCompany(Company company) {
+        Company matchedCompanyById = findById(company.getId());
+
+        matchedCompanyById.setName(company.getName());
+        return matchedCompanyById;
+    }
 }
 
 

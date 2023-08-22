@@ -49,5 +49,10 @@ public class CompanyController {
         return companyRepository.save(company);
     }
 
+    @PutMapping(path = "/{id}")
+    public Company updateCompany(@RequestBody Company company){
+        return companyRepository.updateCompany(company);
+    }
+
 
 }
