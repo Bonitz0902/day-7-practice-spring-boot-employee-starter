@@ -13,12 +13,12 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository){
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     public Employee create(Employee employee) {
-        if(employee.hasInvalidAge()){
+        if (employee.hasInvalidAge()) {
             throw new EmployeeCreateException();
         }
         return employeeRepository.save(employee);
@@ -32,17 +32,17 @@ public class EmployeeService {
 
     public void update(Long id, Employee employee) {
         Employee findByIdEmployee = employeeRepository.findById(id);
-        if(!findByIdEmployee.isActive()){
+        if (!findByIdEmployee.isActive()) {
             throw new EmployeeIsInactiveException();
-        }else{
-            employeeRepository.updateEmployee(id,employee);
+        } else {
+            employeeRepository.updateEmployee(id, employee);
         }
 
     }
 
 
     public List<Employee> listAll() {
-        return null;
+        return employeeRepository.listAll();
     }
 
     public Employee findById(Long id) {
