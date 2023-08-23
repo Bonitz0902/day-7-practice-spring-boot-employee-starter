@@ -104,7 +104,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_all_employees_when_listAll() {
+    void should_return_all_employees_when_listAll_given_employee_service() {
         List<Employee> employeeList = Arrays.asList(
                 new Employee(1L, "Guile", 20, "Male", 123),
                 new Employee(2L, "Miles", 19, "Male", 456),
@@ -116,4 +116,18 @@ public class EmployeeServiceTest {
         verify(mockEmployeeRepository, times(1)).listAll();
         assertEquals(employeeList, returnEmployeList);
     }
+
+    @Test
+    void should_return_employee_when_findById_given_employee_service_employee_id() {
+        Employee expectedEmployee = new Employee(1L, "Guile", 20, "Male", 123);
+
+        when(mockEmployeeRepository.findById(1L)).thenReturn(expectedEmployee);
+
+        Employee returnEmployee = employeeService.findById(1L);
+
+        verify(mockEmployeeRepository, times(1)).findById(1L);
+
+        assertEquals(expectedEmployee, returnEmployee);
+    }
+
 }
