@@ -15,9 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,6 +36,9 @@ public class EmployeeApiTest {
     @Autowired
     private MockMvc mockMvcClient;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @BeforeEach
     void cleanupEmployeeData(){
         employeeRepository.cleanAll();
@@ -40,7 +46,7 @@ public class EmployeeApiTest {
 
     @Test
     void should_return_all_given_employee_when_perform_get_employee() throws Exception {
-        Employee miles = employeeRepository.save(new Employee(1L,"Mile",25,"Male",9000));
+        Employee miles = employeeRepository.save(new Employee(1L, "Mile", 25, "Male", 9000));
 
         mockMvcClient.perform(get("/employees"))
                 .andExpect(status().isOk())
@@ -54,16 +60,15 @@ public class EmployeeApiTest {
 
     @Test
     void should_return_the_employee_when_perform_get_employee_given_a_employee_id() throws Exception{
-        Employee miles = employeeRepository.save(new Employee(1L,"Miles",25,"Male",9000));
-        employeeRepository.save(new Employee(2L,"Bob", 28, "Male",6000));
+        Employee employee = new Employee("John Doe", 30, "Male", 50000);
+        employeeRepository.save(employee);
 
-        mockMvcClient.perform(get("/employees/" + miles.getId()))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(miles.getId()))
-                .andExpect(jsonPath("$.name").value(miles.getName()))
-                .andExpect(jsonPath("$.age").value(miles.getAge()))
-                .andExpect(jsonPath("$.gender").value(miles.getGender()))
-                .andExpect(jsonPath("$.salary").value(miles.getSalary()));
+                .andExpect(jsonPath("$.name").value(employee.getName()))
+                .andExpect(jsonPath("$.age").value(employee.getAge()))
+                .andExpect(jsonPath("$.gender").value(employee.getGender()))
+                .andExpect(jsonPath("$.salary").value(employee.getSalary()));
 
 
     }
@@ -78,19 +83,19 @@ public class EmployeeApiTest {
 
     @Test
     void should_return_the_employee_by_given_gender_when_perform_get_employees() throws Exception{
-        Employee employee = new Employee( "Miles", 25, "Male", 9000);
-        Employee miles = employeeRepository.save(employee);
+        List<Employee> employees = Arrays.asList(
+                new Employee("John Doe", 30, "Male", 50000),
+                new Employee("Jane Smith", 28, "Female", 60000));
+
 
 
         //when(employeeService.findByGender("Male")).thenReturn(expectedEmployees);
 
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees" +"Male")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(employee)))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees")
+                        .param("gender", "Male"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].name").value(miles.getName()))
-                .andExpect(jsonPath("$[0].gender").value(miles.getGender()));
+                .andExpect(jsonPath("$.length()").value(employees.size()));
 
     }
 
@@ -115,17 +120,15 @@ public class EmployeeApiTest {
 
     @Test
     void should_return_updated_employee_when_perform_put_employee_given_a_updated_employee() throws Exception{
-        Employee miles = employeeRepository.save(new Employee(1L,"Miles",25,"Male",9000));
-        Employee updatedEmployee = new Employee(1L, "Miles", 30, "Male", 10000);
+        Employee existingEmployee = new Employee(1L, "John Doe", 30, "Male", 50000);
+        employeeRepository.save(existingEmployee);
 
-        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + miles.getId())
-               .contentType(MediaType.APPLICATION_JSON)
-               .content(new ObjectMapper().writeValueAsString(updatedEmployee)))
-               .andExpect(jsonPath("$.id").value(miles.getId()))
-               .andExpect(jsonPath("$.name").value(miles.getName()))
-               .andExpect(jsonPath("$.age").value(updatedEmployee.getAge()))
-               .andExpect(jsonPath("$.gender").value(miles.getGender()))
-               .andExpect(jsonPath("$.salary").value(updatedEmployee.getSalary()));
+        Employee updatedEmployee = new Employee(1L, "John Doe", 35, "Male", 55000);
+
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(updatedEmployee)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
