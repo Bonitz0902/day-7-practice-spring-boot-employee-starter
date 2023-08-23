@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -40,14 +43,31 @@ public class CompanyServiceTest {
 
     @Test
     void should_return_inactive_company_when_delete_given_company_service_and_company(){
-        Company company = new Company(1L,"Company A");
-        company.setId(1L);
-        company.setStatus(true);
+        Long companyId = 1L;
+        Company existingCompany = new Company(companyId, "Company A");
+        existingCompany.setStatus(true);
 
-        when(mockCompanyRepository.findById(company.getId())).thenReturn(company);
+        when(mockCompanyRepository.findById(companyId)).thenReturn(existingCompany);
 
-        companyService.delete(company.getId());
+        companyService.delete(companyId);
 
-        verify(mockCompanyRepository).updateCompany(eq(company.getId()), any(Company.class));
+        verify(mockCompanyRepository).findById(companyId);
+        verify(mockCompanyRepository).updateCompany(companyId,existingCompany); // Verify that the updateCompany method is called
+        assertFalse(existingCompany.isActive());
+    }
+    @Test
+    void should_return_list_of_companies() {
+        List<Company> expectedCompanies = Arrays.asList(
+                new Company(1L, "Company A"),
+                new Company(2L, "Company B"),
+                new Company(3L, "Company C")
+        );
+
+        when(mockCompanyRepository.listAll()).thenReturn(expectedCompanies);
+
+        List<Company> returnedCompanies = companyService.listAll();
+
+        assertEquals(expectedCompanies, returnedCompanies);
+        verify(mockCompanyRepository).listAll(); // Verify that the repository method is called
     }
 }

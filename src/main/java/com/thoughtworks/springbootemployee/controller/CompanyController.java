@@ -1,8 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.employee.service.CompanyService;
 import com.thoughtworks.springbootemployee.dataTransferObject.Company;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
+import com.thoughtworks.springbootemployee.employee.service.CompanyService;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-//TODO: Formatted 7 lines (ctrl alt L)
+
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-//TODO: Remove extra white space
+
     private final CompanyService companyService;
     private final CompanyRepository companyRepository;
 

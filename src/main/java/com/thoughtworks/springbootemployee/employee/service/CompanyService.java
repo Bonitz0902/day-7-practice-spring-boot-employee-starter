@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.employee.service;
 
 import com.thoughtworks.springbootemployee.dataTransferObject.Company;
+import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class CompanyService {
     }
 
     public List<Company> listAll() {
-        return null;
+        return companyRepository.listAll();
     }
 
     public Company create(Company company) {
