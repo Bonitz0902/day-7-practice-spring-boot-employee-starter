@@ -156,16 +156,16 @@ public class EmployeeServiceTest {
                 new Employee(2L, "Miles", 19, "Male", 456));
 
 
-        long pageSize = 1;
+        long pageSize = 2;
         long pageNumber = 2;
 
-        when(mockEmployeeRepository.listByPage(pageNumber,pageSize)).thenReturn(expectedEmployees);
+        when(mockEmployeeRepository.listByPage(pageNumber, pageSize)).thenReturn(expectedEmployees);
 
-        List<Employee> returnEmployee = employeeService.listByPage(pageSize,pageNumber);
+        List<Employee> returnEmployee = employeeService.listByPage(pageSize, pageNumber);
 
-        verify(mockEmployeeRepository, times(1)).listByPage(pageSize,pageNumber);
+        verify(mockEmployeeRepository, times(1)).listByPage(pageNumber, pageSize);
 
-        assertEquals(expectedEmployees, returnEmployee);
+        assertIterableEquals(expectedEmployees, returnEmployee);
 
     }
 }
