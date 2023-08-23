@@ -130,4 +130,25 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployee, returnEmployee);
     }
 
+    @Test
+    void should_return_gender_when_findByGender_given_employee_gender_employee_service(){
+        String gender = "Male";
+        List<Employee> expectedEmployees =Arrays.asList(
+                new Employee(1L, "Guile", 20, "Male", 123),
+                new Employee(2L, "Miles", 19, "Male", 456),
+                new Employee(3L, "Miguel", 30, "Male", 789));
+
+        when(mockEmployeeRepository.findByGender(gender)).thenReturn(expectedEmployees);
+
+        List<Employee> returnEmployee = employeeService.findByGender(gender);
+
+        verify(mockEmployeeRepository, times(1)).findByGender(gender);
+
+        returnEmployee.forEach(
+                employee -> assertEquals(gender, employee.getGender())
+        );
+
+
+
+    }
 }
