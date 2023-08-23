@@ -32,14 +32,14 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public Employee save(Employee employee){
+    public Employee save(Employee employee) {
         Long id = generateNextId();
-        Employee toBeSavedEmployee = new Employee( id, employee.getName(),employee.getAge(),employee.getGender(),employee.getSalary());
+        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
 
-    public Long generateNextId(){
+    public Long generateNextId() {
         return employees.stream()
                 .mapToLong(Employee::getId)
                 .max()

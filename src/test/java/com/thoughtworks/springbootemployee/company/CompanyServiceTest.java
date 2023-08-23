@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,7 +41,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_inactive_company_when_delete_given_company_service_and_company(){
+    void should_return_inactive_company_when_delete_given_company_service_and_company() {
         Long companyId = 1L;
         Company existingCompany = new Company(companyId, "Company A");
         existingCompany.setStatus(true);
@@ -52,9 +51,10 @@ public class CompanyServiceTest {
         companyService.delete(companyId);
 
         verify(mockCompanyRepository).findById(companyId);
-        verify(mockCompanyRepository).updateCompany(companyId,existingCompany); // Verify that the updateCompany method is called
+        verify(mockCompanyRepository).updateCompany(companyId, existingCompany); // Verify that the updateCompany method is called
         assertFalse(existingCompany.isActive());
     }
+
     @Test
     void should_return_list_of_companies() {
         List<Company> expectedCompanies = Arrays.asList(

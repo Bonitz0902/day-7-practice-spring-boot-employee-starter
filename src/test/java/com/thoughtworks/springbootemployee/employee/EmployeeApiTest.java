@@ -36,7 +36,7 @@ public class EmployeeApiTest {
     private EmployeeService employeeService;
 
     @BeforeEach
-    void cleanupEmployeeData(){
+    void cleanupEmployeeData() {
         employeeRepository.cleanAll();
     }
 
@@ -55,7 +55,7 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_return_the_employee_when_perform_get_employee_given_a_employee_id() throws Exception{
+    void should_return_the_employee_when_perform_get_employee_given_a_employee_id() throws Exception {
         Employee employee = new Employee("John Doe", 30, "Male", 50000);
         employeeRepository.save(employee);
 
@@ -70,7 +70,7 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_return_404_not_found_when_perform_get_employee_given_a_not_existed_id()throws Exception{
+    void should_return_404_not_found_when_perform_get_employee_given_a_not_existed_id() throws Exception {
         long notExistEmployeeId = 99L;
 
         mockMvcClient.perform(get("/employees" + notExistEmployeeId))
@@ -78,7 +78,7 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_return_the_employee_by_given_gender_when_perform_get_employees() throws Exception{
+    void should_return_the_employee_by_given_gender_when_perform_get_employees() throws Exception {
         Employee maleEmployee1 = new Employee(1L, "John Doe", 30, "Male", 50000);
         Employee maleEmployee2 = new Employee(2L, "Michael Smith", 28, "Male", 60000);
         Employee femaleEmployee = new Employee(3L, "Jane Smith", 25, "Female", 55000);
@@ -106,7 +106,7 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_return_the_employee_created_when_perform_post_employee_given_a_new_employee_with_JSON_format() throws Exception{
+    void should_return_the_employee_created_when_perform_post_employee_given_a_new_employee_with_JSON_format() throws Exception {
 
         Employee expectedEmployee = new Employee("Miles", 25, "Male", 9000);
 
@@ -125,7 +125,7 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_return_updated_employee_when_perform_put_employee_given_a_updated_employee() throws Exception{
+    void should_return_updated_employee_when_perform_put_employee_given_a_updated_employee() throws Exception {
         Employee existingEmployee = new Employee(1L, "John Doe", 30, "Male", 50000);
         employeeRepository.save(existingEmployee);
 
@@ -138,10 +138,10 @@ public class EmployeeApiTest {
     }
 
     @Test
-    void should_delete_employee_when_perform_delete_given_employee_id() throws Exception{
-        Employee miles = employeeRepository.save(new Employee(1L,"Miles",25,"Male",9000));
+    void should_delete_employee_when_perform_delete_given_employee_id() throws Exception {
+        Employee miles = employeeRepository.save(new Employee(1L, "Miles", 25, "Male", 9000));
 
-        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+miles.getId()))
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + miles.getId()))
                 .andExpect(status().isNoContent());
     }
 }

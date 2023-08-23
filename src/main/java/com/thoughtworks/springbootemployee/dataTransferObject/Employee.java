@@ -61,7 +61,7 @@ public class Employee {
         return getAge() < MIN_VALID_AGE || getAge() > MAX_VALID_AGE;
     }
 
-    public void setStatus(boolean status){
+    public void setStatus(boolean status) {
         this.isActive = status;
     }
 

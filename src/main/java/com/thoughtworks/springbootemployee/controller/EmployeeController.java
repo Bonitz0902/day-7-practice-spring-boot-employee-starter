@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.employee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
+import com.thoughtworks.springbootemployee.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ public class EmployeeController {
 
     @PutMapping(path = "/{id}")
     public void updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-       employeeService.update(id, employee);
+        employeeService.update(id, employee);
     }
 
     @DeleteMapping(path = "/{id}")

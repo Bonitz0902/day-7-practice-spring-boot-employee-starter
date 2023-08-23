@@ -30,11 +30,11 @@ public class Company {
         this.name = name;
     }
 
-    public Company(){
+    public Company() {
 
     }
 
-    public void setStatus(boolean status){
+    public void setStatus(boolean status) {
         this.isActive = status;
     }
 

@@ -150,7 +150,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_number_of_employee_in_page_when_findByPage_given_employee_service_pageSize_pageNumer(){
+    void should_return_number_of_employee_in_page_when_findByPage_given_employee_service_pageSize_pageNumer() {
         List<Employee> expectedEmployees = Arrays.asList(
                 new Employee(1L, "Guile", 20, "Male", 123),
                 new Employee(2L, "Miles", 19, "Male", 456));

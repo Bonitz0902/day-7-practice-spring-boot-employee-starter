@@ -54,7 +54,7 @@ public class CompanyRepository {
                 .orElse(0L) + 1L;
     }
 
-    public Company updateCompany(Long id,Company company) {
+    public Company updateCompany(Long id, Company company) {
         Company matchedCompanyById = findById(id);
 
         matchedCompanyById.setName(company.getName());
