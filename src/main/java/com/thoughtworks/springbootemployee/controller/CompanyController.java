@@ -14,7 +14,6 @@ import java.util.Map;
 @RequestMapping("/companies")
 public class CompanyController {
 //TODO: Remove extra white space
-
     private final CompanyRepository companyRepository;
 
     @Autowired

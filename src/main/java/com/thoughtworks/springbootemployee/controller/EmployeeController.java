@@ -41,7 +41,7 @@ public class EmployeeController {
         return employeeRepository.save(employee);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}") //TODO: Include the id as parameter as PathVariable as first parameter
     public Employee updateEmployee(@RequestBody Employee employee) {
         return employeeRepository.updateEmployee(employee);
     }
