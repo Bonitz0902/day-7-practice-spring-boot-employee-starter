@@ -83,19 +83,29 @@ public class EmployeeApiTest {
 
     @Test
     void should_return_the_employee_by_given_gender_when_perform_get_employees() throws Exception{
-        List<Employee> employees = Arrays.asList(
-                new Employee("John Doe", 30, "Male", 50000),
-                new Employee("Jane Smith", 28, "Female", 60000));
+        Employee maleEmployee1 = new Employee(1L, "John Doe", 30, "Male", 50000);
+        Employee maleEmployee2 = new Employee(2L, "Michael Smith", 28, "Male", 60000);
+        Employee femaleEmployee = new Employee(3L, "Jane Smith", 25, "Female", 55000);
 
-
-
-        //when(employeeService.findByGender("Male")).thenReturn(expectedEmployees);
+        List<Employee> allEmployees = Arrays.asList(maleEmployee1, maleEmployee2, femaleEmployee);
+        allEmployees.forEach(employee -> employeeService.create(employee)); // Set the test data in the repository
 
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees")
-                        .param("gender", "Male"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.length()").value(employees.size()));
+                        .param("gender", "Male")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2)) // Assuming 2 male employees
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(maleEmployee1.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(maleEmployee1.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(maleEmployee1.getAge()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value(maleEmployee1.getGender()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(maleEmployee1.getSalary()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(maleEmployee2.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(maleEmployee2.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].age").value(maleEmployee2.getAge()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].gender").value(maleEmployee2.getGender()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].salary").value(maleEmployee2.getSalary()));
 
     }
 
