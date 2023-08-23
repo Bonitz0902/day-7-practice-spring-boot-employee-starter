@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee;
+package com.thoughtworks.springbootemployee.employee.service;
 
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;

@@ -1,6 +1,5 @@
-package com.thoughtworks.springbootemployee.service;
+package com.thoughtworks.springbootemployee.employee.service;
 
-import com.thoughtworks.springbootemployee.EmployeeService;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.EmployeeIsInactiveException;
@@ -168,4 +167,6 @@ public class EmployeeServiceTest {
         assertIterableEquals(expectedEmployees, returnEmployee);
 
     }
+
+
 }

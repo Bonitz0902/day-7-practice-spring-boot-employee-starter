@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.EmployeeService;
+import com.thoughtworks.springbootemployee.employee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

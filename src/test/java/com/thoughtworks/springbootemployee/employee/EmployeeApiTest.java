@@ -1,19 +1,23 @@
-package com.thoughtworks.springbootemployee;
+package com.thoughtworks.springbootemployee.employee;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.employee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +30,8 @@ public class EmployeeApiTest {
 
     @Autowired
     private MockMvc mockMvcClient;
+    @MockBean
+    private EmployeeService employeeService;
 
     @BeforeEach
     void cleanupEmployeeData(){
@@ -36,7 +42,7 @@ public class EmployeeApiTest {
     void should_return_all_given_employee_when_perform_get_employee() throws Exception {
         Employee miles = employeeRepository.save(new Employee(1L,"Mile",25,"Male",9000));
 
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
+        mockMvcClient.perform(get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(miles.getId()))
@@ -51,7 +57,7 @@ public class EmployeeApiTest {
         Employee miles = employeeRepository.save(new Employee(1L,"Miles",25,"Male",9000));
         employeeRepository.save(new Employee(2L,"Bob", 28, "Male",6000));
 
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + miles.getId()))
+        mockMvcClient.perform(get("/employees/" + miles.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(miles.getId()))
                 .andExpect(jsonPath("$.name").value(miles.getName()))
@@ -66,12 +72,25 @@ public class EmployeeApiTest {
     void should_return_404_not_found_when_perform_get_employee_given_a_not_existed_id()throws Exception{
         long notExistEmployeeId = 99L;
 
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees" + notExistEmployeeId))
+        mockMvcClient.perform(get("/employees" + notExistEmployeeId))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void should_return_the_employee_by_given_gender_when_perform_get_employees() throws Exception{
+        Employee employee = new Employee( "Miles", 25, "Male", 9000);
+        Employee miles = employeeRepository.save(employee);
+
+
+        //when(employeeService.findByGender("Male")).thenReturn(expectedEmployees);
+
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees" +"Male")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(employee)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].name").value(miles.getName()))
+                .andExpect(jsonPath("$[0].gender").value(miles.getGender()));
 
     }
 
@@ -85,13 +104,16 @@ public class EmployeeApiTest {
                 "    \"salary\": 9000\n" +
                 "}";
 
-        Employee employee = new Employee(1L, "Miles", 25, "Male", 9000);
+        Employee expectedEmployee = new Employee("Miles", 25, "Male", 9000);
+        Employee createdEmployee = new Employee(1L, "Miles", 25, "Male", 9000);
+
+        when(employeeService.create(expectedEmployee)).thenReturn(createdEmployee);
 
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(newEmployeeJson))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newEmployeeJson))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.id").exists()) // Check if id exists
                 .andExpect(jsonPath("$.name").value("Miles"))
                 .andExpect(jsonPath("$.age").value(25))
                 .andExpect(jsonPath("$.gender").value("Male"))
