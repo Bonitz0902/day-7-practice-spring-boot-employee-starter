@@ -28,7 +28,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_create_given_employee_service_and_employee_with_valid_age(){
 
-        Employee employee = new Employee("Guile", 20, "Male", 100000);
+        Employee employee = new Employee("Guile", 20, "Male", 100000, true);
         Employee savedEmployee = new Employee(1L, "Guile", 20, "Male", 100000);
 
         when(mockEmployeeRepository.save(employee)).thenReturn(savedEmployee);
@@ -45,7 +45,7 @@ public class EmployeeServiceTest {
 
     @Test
     void should_throw_exception_when_create_given_employee_service_and_employee_age_is_less_than_18(){
-        Employee employee = new Employee("Pedo", 17, "Male", 999);
+        Employee employee = new Employee("Pedo", 17, "Male", 999, true);
 
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, ()-> {
             employeeService.create(employee);
@@ -53,5 +53,16 @@ public class EmployeeServiceTest {
 
         assertEquals("Employee must be 18-65 years old", employeeCreateException.getMessage());
 
+    }
+
+    @Test
+    void should_throw_exception_when_create_given_employee_service_and_employee_age_is_greater_than_65(){
+        Employee employee = new Employee("Pedo", 100, "Male", 999, true);
+
+        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, ()-> {
+            employeeService.create(employee);
+        });
+
+        assertEquals("Employee must be 18-65 years old", employeeCreateException.getMessage());
     }
 }

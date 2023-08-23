@@ -1,13 +1,14 @@
 package com.thoughtworks.springbootemployee.dataTransferObject;
 
 public class Employee {
-    private static final int MIN_VALID_AGE = 18;
-    //TODO: You can use wrapper class for this part (default value is null for wrapper class which fits the business intent)
     private long id;
     private String name;
     private int age;
     private String gender;
     private int salary;
+    private boolean isActive = true;
+    private static final int MIN_VALID_AGE = 18;
+    private static final int MAX_VALID_AGE = 65;
 
     public Employee(Long id, String name, int age, String gender, int salary) {
         this.id = id;
@@ -21,28 +22,21 @@ public class Employee {
 
     }
 
-    public Employee(String name, int age, String gender, int salary) {
+    public Employee(String name, int age, String gender, int salary, boolean isActive) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+        this.isActive = isActive;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    } //TODO: remove unused method
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    } //TODO: remove unused method
 
     public int getAge() {
         return age;
@@ -56,10 +50,6 @@ public class Employee {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    } //TODO: remove unused method
-
     public int getSalary() {
         return salary;
     }
@@ -69,6 +59,6 @@ public class Employee {
     }
 
     public boolean hasInvalidAge() {
-        return getAge() < MIN_VALID_AGE;
+        return getAge() < MIN_VALID_AGE || getAge() > MAX_VALID_AGE;
     }
 }
