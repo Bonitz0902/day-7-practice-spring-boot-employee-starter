@@ -8,8 +8,15 @@ public class Employee {
     private String gender;
     private int salary;
 
-    public Employee(long id, String name, int age, String gender, int salary) {
+    public Employee(Long id, String name, int age, String gender, int salary) {
         this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
+    public Employee( String name, int age, String gender, int salary) {
         this.name = name;
         this.age = age;
         this.gender = gender;
