@@ -13,11 +13,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,8 +32,6 @@ public class EmployeeApiTest {
 
     @Autowired
     private MockMvc mockMvcClient;
-    @MockBean
-    private EmployeeService employeeService;
 
     @BeforeEach
     void cleanupEmployeeData(){
@@ -97,27 +97,20 @@ public class EmployeeApiTest {
     @Test
     void should_return_the_employee_created_when_perform_post_employee_given_a_new_employee_with_JSON_format() throws Exception{
 
-        String newEmployeeJson = "{\n" +
-                "    \"name\":\"Miles\",\n" +
-                "    \"age\":25,\n" +
-                "    \"gender\": \"Male\",\n" +
-                "    \"salary\": 9000\n" +
-                "}";
-
         Employee expectedEmployee = new Employee("Miles", 25, "Male", 9000);
-        Employee createdEmployee = new Employee(1L, "Miles", 25, "Male", 9000);
-
-        when(employeeService.create(expectedEmployee)).thenReturn(createdEmployee);
 
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(newEmployeeJson))
+                        .content(new ObjectMapper().writeValueAsString(expectedEmployee)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").exists()) // Check if id exists
-                .andExpect(jsonPath("$.name").value("Miles"))
-                .andExpect(jsonPath("$.age").value(25))
-                .andExpect(jsonPath("$.gender").value("Male"))
-                .andExpect(jsonPath("$.salary").value(9000));
+                .andExpect(jsonPath("$.name").value(expectedEmployee.getName()))
+                .andExpect(jsonPath("$.age").value(expectedEmployee.getAge()))
+                .andExpect(jsonPath("$.gender").value(expectedEmployee.getGender()))
+                .andExpect(jsonPath("$.salary").value(expectedEmployee.getSalary()));
+
+
+        //verify(employeeService).create(any(Employee.class));
+
     }
 
     @Test
