@@ -55,14 +55,6 @@ public class EmployeeRepository {
         return matchedEmployeeById;
     }
 
-
-
-    public String deleteEmployee(Long employeeId) {
-         Employee matchedEmployeeById = findById(employeeId);
-         matchedEmployeeById.setStatus(false);
-         return "Employee Deleted.";
-    }
-
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {
         return employees.stream()
                 .skip((pageNumber - 1) * pageSize)

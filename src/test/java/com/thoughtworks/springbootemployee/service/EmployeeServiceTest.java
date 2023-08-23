@@ -131,9 +131,9 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_gender_when_findByGender_given_employee_gender_employee_service(){
+    void should_return_gender_when_findByGender_given_employee_gender_employee_service() {
         String gender = "Male";
-        List<Employee> expectedEmployees =Arrays.asList(
+        List<Employee> expectedEmployees = Arrays.asList(
                 new Employee(1L, "Guile", 20, "Male", 123),
                 new Employee(2L, "Miles", 19, "Male", 456),
                 new Employee(3L, "Miguel", 30, "Male", 789));
@@ -147,8 +147,25 @@ public class EmployeeServiceTest {
         returnEmployee.forEach(
                 employee -> assertEquals(gender, employee.getGender())
         );
+    }
+
+    @Test
+    void should_return_number_of_employee_in_page_when_findByPage_given_employee_service_pageSize_pageNumer(){
+        List<Employee> expectedEmployees = Arrays.asList(
+                new Employee(1L, "Guile", 20, "Male", 123),
+                new Employee(2L, "Miles", 19, "Male", 456));
 
 
+        long pageSize = 1;
+        long pageNumber = 2;
+
+        when(mockEmployeeRepository.listByPage(pageNumber,pageSize)).thenReturn(expectedEmployees);
+
+        List<Employee> returnEmployee = employeeService.listByPage(pageSize,pageNumber);
+
+        verify(mockEmployeeRepository, times(1)).listByPage(pageSize,pageNumber);
+
+        assertEquals(expectedEmployees, returnEmployee);
 
     }
 }

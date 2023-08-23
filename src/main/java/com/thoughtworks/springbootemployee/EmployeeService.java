@@ -56,7 +56,7 @@ public class EmployeeService {
     }
 
     public List<Employee> listByPage(Long pageNumber, Long pageSize) {
-        return null;
+        return employeeRepository.listByPage(pageNumber,pageSize);
 
     }
 }
