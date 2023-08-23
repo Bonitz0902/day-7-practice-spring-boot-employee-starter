@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.dataTransferObject;
 
 public class Employee {
+    private static final int MIN_VALID_AGE = 18;
     //TODO: You can use wrapper class for this part (default value is null for wrapper class which fits the business intent)
     private long id;
     private String name;
@@ -65,5 +66,9 @@ public class Employee {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public boolean hasInvalidAge() {
+        return getAge() < MIN_VALID_AGE;
     }
 }
