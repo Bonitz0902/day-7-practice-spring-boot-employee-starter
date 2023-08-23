@@ -34,7 +34,7 @@ public class EmployeeRepository {
 
     public Employee save(Employee employee){
         Long id = generateNextId();
-        Employee toBeSavedEmployee = new Employee(id, employee.getName(),employee.getAge(),employee.getGender(),employee.getSalary());
+        Employee toBeSavedEmployee = new Employee( id, employee.getName(),employee.getAge(),employee.getGender(),employee.getSalary());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
@@ -46,8 +46,8 @@ public class EmployeeRepository {
                 .orElse(0L) + 1L;
     }
 
-    public Employee updateEmployee(Employee updatedEmployee) {
-        Employee matchedEmployeeById = findById(updatedEmployee.getId());
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        Employee matchedEmployeeById = findById(id);
 
         matchedEmployeeById.setAge(updatedEmployee.getAge());
         matchedEmployeeById.setSalary(updatedEmployee.getSalary());
@@ -59,7 +59,7 @@ public class EmployeeRepository {
 
     public String deleteEmployee(Long employeeId) {
          Employee matchedEmployeeById = findById(employeeId);
-         employees.remove(matchedEmployeeById);
+         matchedEmployeeById.setStatus(false);
          return "Employee Deleted.";
     }
 

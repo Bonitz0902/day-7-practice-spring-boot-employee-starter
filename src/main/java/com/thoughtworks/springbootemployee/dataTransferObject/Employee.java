@@ -22,12 +22,11 @@ public class Employee {
 
     }
 
-    public Employee(String name, int age, String gender, int salary, boolean isActive) {
+    public Employee(String name, int age, String gender, int salary) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.isActive = isActive;
     }
 
     public long getId() {
@@ -61,4 +60,13 @@ public class Employee {
     public boolean hasInvalidAge() {
         return getAge() < MIN_VALID_AGE || getAge() > MAX_VALID_AGE;
     }
+
+    public void setStatus(boolean status){
+        this.isActive = status;
+    }
+
+    public Boolean isActive() {
+        return isActive;
+    }
+
 }
