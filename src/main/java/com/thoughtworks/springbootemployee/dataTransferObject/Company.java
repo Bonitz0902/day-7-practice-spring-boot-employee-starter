@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-    private Long id;
+    private Long id; //TODO: Can be changed to  final
     private String name;
-    private List<Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>(); //TODO: Can be changed to  final
 
     public Long getId() {
         return id;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+//TODO: Formatted 4 lines (ctrl alt L)
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -42,19 +42,19 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{id}")
-    public Employee updateEmployee(@RequestBody Employee employee){
+    public Employee updateEmployee(@RequestBody Employee employee) {
         return employeeRepository.updateEmployee(employee);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteEmployee(@PathVariable Long id){
+    public String deleteEmployee(@PathVariable Long id) {
         return employeeRepository.deleteEmployee(id);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber,
-                                     @RequestParam Long pageSize){
-        return employeeRepository.listByPage(pageNumber,pageSize);
+                                     @RequestParam Long pageSize) {
+        return employeeRepository.listByPage(pageNumber, pageSize);
     }
 }
