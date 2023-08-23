@@ -1,6 +1,7 @@
-package com.thoughtworks.springbootemployee.employee.service;
+package com.thoughtworks.springbootemployee.employee;
 
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
+import com.thoughtworks.springbootemployee.employee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.EmployeeIsInactiveException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;

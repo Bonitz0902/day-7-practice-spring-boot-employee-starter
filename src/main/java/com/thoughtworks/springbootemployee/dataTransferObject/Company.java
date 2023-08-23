@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-    private Long id; //TODO: Can be changed to  final
+    private Long id;
     private String name;
-    private List<Employee> employeeList = new ArrayList<>(); //TODO: Can be changed to  final
+    private final List<Employee> employeeList = new ArrayList<>();
+    private boolean isActive = true;
 
     public Long getId() {
         return id;
@@ -29,6 +30,18 @@ public class Company {
         this.name = name;
     }
 
+    public Company(){
+
+    }
+
+    public void setStatus(boolean status){
+        this.isActive = status;
+    }
+
+    public Boolean isActive() {
+        return isActive;
+    }
+
 
     public List<Employee> getEmployeeList() {
         return employeeList;
@@ -36,5 +49,9 @@ public class Company {
 
     public void addEmployee(Employee employee) {
         employeeList.add(employee);
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
