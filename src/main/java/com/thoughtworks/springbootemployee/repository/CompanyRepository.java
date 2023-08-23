@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-
+//TODO: Formatted 1 line (ctrl alt L)
 public class CompanyRepository {
     private final CompanyData companyData = new CompanyData();
     private final Map<Long, Company> companyMap = companyData.getCompanies();
-
+    //TODO: remove extra lines
 
     public List<Company> listAll() {
         return new ArrayList<>(companyMap.values());
@@ -32,7 +32,7 @@ public class CompanyRepository {
 
     public Map<Long, Company> listByPage(Long pageNumber, Long pageSize) {
         return companyMap.values().stream()
-                .skip( (pageNumber - 1) * pageSize)
+                .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toMap(
                         Company::getId,

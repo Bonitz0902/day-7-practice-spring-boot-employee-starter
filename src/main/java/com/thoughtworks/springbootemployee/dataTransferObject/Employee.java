@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.dataTransferObject;
 
 public class Employee {
+    //TODO: You can use wrapper class for this part (default value is null for wrapper class which fits the business intent)
     private long id;
     private String name;
     private int age;
@@ -21,7 +22,7 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
-    }
+    } //TODO: remove unused method
 
     public String getName() {
         return name;
@@ -29,7 +30,7 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
-    }
+    } //TODO: remove unused method
 
     public int getAge() {
         return age;
@@ -45,7 +46,7 @@ public class Employee {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
+    } //TODO: remove unused method
 
     public int getSalary() {
         return salary;

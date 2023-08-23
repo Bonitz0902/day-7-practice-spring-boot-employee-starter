@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+//TODO: Formatted 7 lines (ctrl alt L)
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-
-
+//TODO: Remove extra white space
     private final CompanyRepository companyRepository;
 
     @Autowired
@@ -28,35 +27,35 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/{id}")
-    public Company findById(@PathVariable Long id){
+    public Company findById(@PathVariable Long id) {
         return companyRepository.findById(id);
     }
 
     @GetMapping(path = "/{id}/employees")
-    public List<Employee> listAllCompanyEmployees(@PathVariable Long id){
+    public List<Employee> listAllCompanyEmployees(@PathVariable Long id) {
         return companyRepository.findEmployees(id);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public Map<Long, Company> listByPage(@RequestParam Long pageNumber,
-                                         @RequestParam Long pageSize){
-        return companyRepository.listByPage(pageNumber,pageSize);
+                                         @RequestParam Long pageSize) {
+        return companyRepository.listByPage(pageNumber, pageSize);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company company){
+    public Company addCompany(@RequestBody Company company) {
         return companyRepository.save(company);
     }
 
     @PutMapping(path = "/{id}")
-    public Company updateCompany(@RequestBody Company company){
+    public Company updateCompany(@RequestBody Company company) {
         return companyRepository.updateCompany(company);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteCompany(@PathVariable Long id){
+    public String deleteCompany(@PathVariable Long id) {
         return companyRepository.deleteCompany(id);
     }
 }

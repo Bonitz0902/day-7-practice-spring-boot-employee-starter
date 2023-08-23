@@ -1,5 +1,5 @@
 package com.thoughtworks.springbootemployee.staticData;
-
+//TODO: Remove package name to match the regular expression
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class EmployeeData {
 
         return employees;
     }
-
+    //TODO: Remove extra lines
 
 
 }
