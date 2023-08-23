@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.employee.service.CompanyService;
 import com.thoughtworks.springbootemployee.dataTransferObject.Company;
 import com.thoughtworks.springbootemployee.dataTransferObject.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -14,16 +15,18 @@ import java.util.Map;
 @RequestMapping("/companies")
 public class CompanyController {
 //TODO: Remove extra white space
+    private final CompanyService companyService;
     private final CompanyRepository companyRepository;
 
     @Autowired
-    public CompanyController(CompanyRepository companyRepository) {
+    public CompanyController(CompanyService companyService, CompanyRepository companyRepository) {
+        this.companyService = companyService;
         this.companyRepository = companyRepository;
     }
 
     @GetMapping
     public List<Company> listAll() {
-        return companyRepository.listAll();
+        return companyService.listAll();
     }
 
     @GetMapping(path = "/{id}")
@@ -45,7 +48,7 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company company) {
-        return companyRepository.save(company);
+        return companyService.create(company);
     }
 
     @PutMapping(path = "/{id}")

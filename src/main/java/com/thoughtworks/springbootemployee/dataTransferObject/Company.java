@@ -25,11 +25,16 @@ public class Company {
         this.name = name;
     }
 
+    public Company(String name) {
+        this.name = name;
+    }
+
+
     public List<Employee> getEmployeeList() {
         return employeeList;
     }
 
-    public void addEmployee(Employee employee){
+    public void addEmployee(Employee employee) {
         employeeList.add(employee);
     }
 }
