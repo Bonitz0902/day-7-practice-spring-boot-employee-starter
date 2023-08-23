@@ -43,7 +43,7 @@ public class CompanyRepository {
     public Company save(Company company) {
         Long id = generateNextId();
         Company toBeSavedCompany = new Company(id, company.getName());
-        companyMap.put(toBeSavedCompany.getId(), company);
+        companyMap.put(id, toBeSavedCompany);
         return toBeSavedCompany;
     }
 
